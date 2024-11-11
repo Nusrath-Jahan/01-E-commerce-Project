@@ -1,4 +1,3 @@
-// Example array of products
 const products = [
   {
     id: 1,
@@ -69,8 +68,10 @@ const products = [
     price: "$59.99",
     description: " Elevate your look with these stylish high heels.",
     image: "/Product Image/Classic High Heels.jpeg",
-  }
+  },
 ];
+// Cart array to store added products
+let cart = [];
 
 // Function to generate product elements
 function generateProductElements() {
@@ -78,57 +79,74 @@ function generateProductElements() {
 
   products.forEach((product) => {
     const productElement = document.createElement("li");
-    // Add a class to the productElement
     productElement.classList.add("product-item");
 
     productElement.innerHTML = `
-        <div>
+      <div>
         <img src="${product.image}" alt="${product.name}" />
         <h1 class="product-name">${product.name}</h1>
         <p class="product-description">${product.description}</p>
         <p class="product-price">${product.price}</p>
-        <button class="add-to-cart">Add to Cart</button>
-        </div>
-      `;
+        <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+      </div>
+    `;
 
     productContainer.appendChild(productElement);
   });
+
+  // Add event listeners to all "Add to Cart" buttons
+  const addToCartButtons = document.querySelectorAll(".add-to-cart");
+  addToCartButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      const productId = parseInt(e.target.getAttribute("data-id"));
+      addToCart(productId);
+    });
+  });
+}
+
+// Function to add product to the cart
+function addToCart(productId) {
+  const product = products.find((item) => item.id === productId);
+
+  if (product) {
+    cart.push(product); // Add product to cart array
+    updateCartDisplay(); // Update cart UI
+    showConfirmationMessage(product.name); // Show confirmation
+  }
+}
+
+// Function to update the cart display
+function updateCartDisplay() {
+  const cartItemsContainer = document.getElementById("cart-items");
+  cartItemsContainer.innerHTML = ""; // Clear current cart items
+
+  cart.forEach((item) => {
+    const cartItem = document.createElement("li");
+    cartItem.innerHTML = `
+    <div>
+        <img src="${item.image}" alt="${item.name}" />
+        <h1 class="product-name">${item.name}</h1>
+        <p class="product-description">${item.description}</p>
+        <p class="product-price">${item.price}</p>
+        <button class="add-to-cart" data-id="${item.id}">Add to Cart</button>
+      </div>
+      
+    `;
+
+    cartItemsContainer.appendChild(cartItem);
+  });
+}
+
+// Function to show a confirmation message
+function showConfirmationMessage(productName) {
+  const messageElement = document.getElementById("cart-message");
+  messageElement.textContent = `${productName} has been added to your cart!`;
+  messageElement.style.display = "block"; // Show message
+
+  setTimeout(() => {
+    messageElement.style.display = "none"; // Hide after 2 seconds
+  }, 4000);
 }
 
 // Call the function to generate product elements when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", generateProductElements);
-
-//--------------------------- 2nd Homewrok
-document.addEventListener("DOMContentLoaded", () => {
-  const sortDropdown = document.getElementById("sort");
-  const productList = document.querySelector(".product-list");
-  const products = Array.from(productList.children);
-  
-  sortDropdown.addEventListener("change", () => {
-    const sortOrder = sortDropdown.value;
-    const sortedProducts = products.sort((a, b) => {
-      const priceA = parseFloat(
-        a.querySelector(".product-price").textContent.replace("$", "")
-      );
-      const priceB = parseFloat(
-        b.querySelector(".product-price").textContent.replace("$", "")
-      );
-
-      if (sortOrder === "asc") {
-        return priceA - priceB;
-      } else {
-        return priceB - priceA;
-      }
-    });
-
-    // Clear the product list
-    while (productList.firstChild) {
-      productList.removeChild(productList.firstChild);
-    }
-
-    // Append the sorted products
-    sortedProducts.forEach((product) => {
-      productList.appendChild(product);
-    });
-  });
-});
