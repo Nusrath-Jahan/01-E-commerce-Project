@@ -32,22 +32,23 @@
         </div>
         <!--  Search  -->
         <div class="search-bar">
-          <input type="text" placeholder="Search..." />
+          <input type="text" id="search-input" placeholder="Search..." />
           <button><i class="fa fa-search"></i></button>
         </div>
         <!-- -----Sorting price------ -->
         <div class="products--sorting">
-          <label for="sort">Price</label>
+          <label for="sort">Sort by:</label>
           <select id="sort" class="sort--dropdown">
-            <option value="asc">Low to High</option>
-            <option value="desc">High to Low</option>
+            <option value="price-asc">Low to High</option>
+            <option value="price-desc">High to Low</option>
+            
           </select>
         </div>
         <!-- ------- -->
         <!-- nav  -->
         <div class="icons">
           <a href="index.html"> <i class="fa fa-user"></i></a>
-          <i class="fa fa-shopping-cart"></i>
+          <a href="addToCart.html"> <i class="fa fa-shopping-cart"></i></a>
           <i class="fa fa-heart"></i>
           <i class="fa fa-headphones"></i>
           <a href="#contact"><i class="fa fa-globe"></i></a>
@@ -58,6 +59,7 @@
       <div class="product-menu">
         <a href="clothing.html">Clothing</a>
         <a href="electronics.html">Electronics</a>
+        <a href="/Movie/movie.html">Movie</a>
       </div>
     </header>
 
@@ -69,13 +71,13 @@
     </main>
 
     <!-- Modal -->
-    
-   <!-- Cart Modal or Section -->
-   <div class="cart-section">
-    <h2>Your Cart</h2>
-    <ul id="cart-items"></ul>
-    <p id="cart-message" class="confirmation-message"></p>
-  </div>
+
+    <!-- Cart Modal or Section -->
+    <div class="cart-section">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p id="cart-message" class="confirmation-message"></p>
+    </div>
 
     <!-- Footer Section -->
     <footer>
@@ -88,7 +90,8 @@
       </p>
     </footer>
 
-    <script src="/main-page.js"></script>
-    <script src="/script.js"></script>
+    <script src="/app.js"></script>
+    <!-- <script src="/script.js"></script> -->
+ 
   </body>
 </html>
